@@ -2,7 +2,7 @@ from rdflib import Graph, URIRef
 from rdflib.namespace import XSD
 from typing import Optional, Iterable
 from ..namespace import MEDS
-from ..utils.rfd_utilis import *
+from ..utils.rdf_utils import *
 
 def map_code(
     g: Graph,

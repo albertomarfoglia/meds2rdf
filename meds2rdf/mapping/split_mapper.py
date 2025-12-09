@@ -1,7 +1,7 @@
 from rdflib import Graph, URIRef
 from typing import Iterable
 from ..namespace import MEDS
-from ..utils.rfd_utilis import try_access_mandatory_field_value, to_subject_node
+from ..utils.rdf_utils import try_access_mandatory_field_value, to_subject_node
 
 _split_dict = {
     "train": MEDS.trainSplit,
