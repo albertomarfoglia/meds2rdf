@@ -4,11 +4,11 @@ from rdflib import Graph
 import polars as pl
 import json
 
-from mapping.measurement_mapper import map_data_table
-from mapping.code_mapper import map_code_table
-from mapping.label_mapper import map_label_table
-from mapping.split_mapper import map_split_table
-from mapping.metadata_mapper import map_dataset_metadata
+from .mapping.measurement_mapper import map_data_table
+from .mapping.code_mapper import map_code_table
+from .mapping.label_mapper import map_label_table
+from .mapping.split_mapper import map_split_table
+from .mapping.metadata_mapper import map_dataset_metadata
 
 from meds2rdf.namespace import MEDS
 
