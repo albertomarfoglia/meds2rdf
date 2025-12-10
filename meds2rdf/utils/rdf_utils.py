@@ -26,12 +26,13 @@ def if_column_is_present(column_name, source, callback: Callable[[str], Graph]):
     else:
         callback(str(value))
 
+from urllib.parse import quote
+
 def add_code(code_str: str, graph: Graph, dataset_uri: Optional[URIRef] = None, external = False):
-    code_value = code_str.replace(" ", "%20")
     if external: 
-        code_uri = URIRef(code_value)
+        code_uri = URIRef(quote(code_str))
     else: 
-        code_uri = URIRef(base=MEDS_INSTANCES, value=f"code/{code_value}")
+        code_uri = URIRef(base=MEDS_INSTANCES, value=f"code/{quote(code_str)}")
 
     graph.add((code_uri, RDF.type, MEDS.Code))
     graph.add((code_uri, MEDS.codeString, Literal(str(code_str), datatype=XSD.string)))
