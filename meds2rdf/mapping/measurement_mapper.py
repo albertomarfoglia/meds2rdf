@@ -15,7 +15,6 @@ def map_measurement(
     g: Graph,
     row: dict,
     dataset_uri: Optional[URIRef] = None,
-    generate_code_node: bool = False
 ) -> URIRef:
     """
     Map a single row of a MEDS DataSchema into a Measurement RDF individual.
@@ -53,12 +52,8 @@ def map_measurement(
     # Code
     # ---------------------------
     code_str = try_access_mandatory_field_value(row=row, field="code", entity="Measurement")
-    g.add((measurement_uri, MEDS.codeString, Literal(str(code_str), datatype=XSD.string)))
-    
-    # Optionally create Code individual
-    if generate_code_node: 
-        code_uri = add_code(code_str=code_str, graph=g)
-        g.add((measurement_uri, MEDS.hasCode, code_uri))
+    g.add((measurement_uri, MEDS.codeString, Literal(str(code_str), datatype=XSD.string)))    
+    g.add((measurement_uri, MEDS.hasCode, add_code(code_str=code_str, graph=g)))
 
     # ---------------------------
     # Link to dataset metadata if provided
@@ -76,7 +71,6 @@ def map_data_table(
     g: Graph,
     data: Iterable[dict],
     dataset_uri: Optional[URIRef] = None,
-    generate_code_node: bool = False
 ) -> list[URIRef]:
     """
     Map an iterable of MEDS DataSchema rows to RDF Measurement individuals.
@@ -99,6 +93,6 @@ def map_data_table(
     """
     uris = []
     for row in data:
-        measurement_uri = map_measurement(g, row, dataset_uri, generate_code_node)
+        measurement_uri = map_measurement(g, row, dataset_uri)
         uris.append(measurement_uri)
     return uris

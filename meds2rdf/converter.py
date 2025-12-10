@@ -29,9 +29,8 @@ class MedsRDFConverter:
         self,
         include_dataset_metadata=True,
         include_codes=True,
-        include_labels=True,
-        include_splits=True,
-        generate_code_nodes=False,
+        include_labels=False,
+        include_splits=False,
     ):
         """
         Convert an entire MEDS dataset directory to RDF.
@@ -53,7 +52,7 @@ class MedsRDFConverter:
 
         # 2. Data tables
         data = pl.read_parquet(str(self.meds_root / "data/**/*.parquet")).to_dicts()
-        map_data_table(self.graph, data, dataset_uri, generate_code_nodes)
+        map_data_table(self.graph, data, dataset_uri)
 
         # 3. Codes
         if include_codes:

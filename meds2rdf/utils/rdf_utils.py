@@ -27,11 +27,11 @@ def if_column_is_present(column_name, source, callback: Callable[[str], Graph]):
         callback(str(value))
 
 def add_code(code_str: str, graph: Graph, dataset_uri: Optional[URIRef] = None, external = False):
-    code_value = f"code/{code_str.replace(" ", "%20")}"
+    code_value = code_str.replace(" ", "%20")
     if external: 
         code_uri = URIRef(code_value)
     else: 
-        code_uri = URIRef(base=MEDS_INSTANCES, value=code_value)
+        code_uri = URIRef(base=MEDS_INSTANCES, value=f"code/{code_value}")
 
     graph.add((code_uri, RDF.type, MEDS.Code))
     graph.add((code_uri, MEDS.codeString, Literal(str(code_str), datatype=XSD.string)))
