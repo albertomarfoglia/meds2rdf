@@ -9,11 +9,11 @@
 - Convert MEDS datasets (Data, Codes, Labels, Subject Splits) into RDF.
 - Supports all MEDS value modalities: numeric, text, images, waveforms.
 - Fully links:
-  - Measurements to Subjects
+  - Events to Subjects
   - Codes to metadata
   - Labels to prediction samples
   - Subjects to splits
-  - Measurements and Codes to dataset metadata
+  - Events and Codes to dataset metadata
 - Outputs RDF in Turtle format (`.ttl`) ready for use with standard RDF tools.
 
 ## Installation

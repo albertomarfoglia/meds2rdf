@@ -1,5 +1,5 @@
 from typing import Callable, Iterable
-from rdflib import Literal, RDF, Node, URIRef, Graph
+from rdflib import Literal, RDF, Namespace, URIRef, Graph
 from rdflib.namespace import XSD
 from datetime import datetime
 from typing import Optional, Callable, Iterable
@@ -30,23 +30,25 @@ from urllib.parse import quote
 
 def add_code(code_str: str, graph: Graph, dataset_uri: Optional[URIRef] = None, external = False):
     if external: 
-        code_uri = URIRef(quote(code_str))
+        code_uri = curie_to_uri(code_str)
     else: 
-        code_uri = URIRef(base=MEDS_INSTANCES, value=f"code/{quote(code_str)}")
+        code_uri = URIRef(MEDS_INSTANCES[f"code/{quote(code_str)}"])
 
     graph.add((code_uri, RDF.type, MEDS.Code))
     graph.add((code_uri, MEDS.codeString, Literal(str(code_str), datatype=XSD.string)))
+
     if dataset_uri:
         graph.add((code_uri, PROV.wasDerivedFrom, dataset_uri))
+        
     return code_uri
 
 def to_subject_node(subject_id: str) -> URIRef:
-    if (subject_uri := URIRef(base=MEDS_INSTANCES, value=f"subject/{subject_id}")) is None:
+    if (subject_uri := URIRef(MEDS_INSTANCES[f"subject/{subject_id}"])) is None:
         raise ValueError(f"Cannot create subject uri with id: ${subject_id}")
     return subject_uri
 
-def curie_to_uri(curie: str, prefix_map: dict = PREFIX_MAP_BIOPORTAL) -> str:
+def curie_to_uri(curie: str, prefix_map: dict = PREFIX_MAP_BIOPORTAL) -> URIRef:
     prefix, local = curie.split(":", 1)
     if prefix not in prefix_map:
         raise ValueError(f"Unknown prefix: {prefix}")
-    return prefix_map[prefix] + local
+    return URIRef(f"{prefix_map[prefix]}/{local}")

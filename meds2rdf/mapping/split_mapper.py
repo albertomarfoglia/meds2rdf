@@ -5,7 +5,7 @@ from ..utils.rdf_utils import try_access_mandatory_field_value, to_subject_node
 
 _split_dict = {
     "train": MEDS.trainSplit,
-    "tuning": MEDS.tuning,
+    "tuning": MEDS.tuningSplit,
     "held_out": MEDS.heldOutSplit
 }
 
@@ -30,7 +30,7 @@ def map_split(g: Graph, row: dict) -> URIRef:
     assigned_split = try_access_mandatory_field_value(row=row, field="split", entity="SubjectSplit")
 
     if (split_uri := _split_dict.get(assigned_split)) is None:
-        raise ValueError(f"The split assignment should be one of: ${_split_dict}")
+        raise ValueError(f"The given split name '{assigned_split}' is not valid")
 
     g.add((to_subject_node(subject_id), MEDS.assignedSplit, split_uri))
     return split_uri

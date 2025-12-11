@@ -33,7 +33,7 @@ def map_label(g: Graph, row: dict, dataset_uri: Optional[URIRef] = None) -> URIR
     """
 
     # Create unique URI for the label_sample
-    label_sample_uri = URIRef(base=MEDS_INSTANCES, value=f"label_sample/{uuid.uuid4()}")
+    label_sample_uri = URIRef(MEDS_INSTANCES[f"label_sample/{uuid.uuid4()}"])
     g.add((label_sample_uri, RDF.type, MEDS.LabelSample))
 
     subject_id = try_access_mandatory_field_value(row=row, field="subject_id", entity="Label")

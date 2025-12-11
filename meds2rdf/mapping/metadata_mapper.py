@@ -46,7 +46,7 @@ def map_dataset_metadata(g: Graph, shards: dict) -> URIRef:
         The URI of the created DatasetMetadata individual.
     """
     
-    dataset_uri = URIRef(base=MEDS_INSTANCES, value=f"dataset_metadata/{uuid.uuid4()}")
+    dataset_uri = URIRef(MEDS_INSTANCES[f"dataset_metadata/{uuid.uuid4()}"])
     g.add((dataset_uri, RDF.type, MEDS.DatasetMetadata))
 
     for column_name, (p, dtype) in _literals_dict.items():
